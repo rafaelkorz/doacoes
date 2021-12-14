@@ -1,11 +1,11 @@
-import axios from "axios";
+import api from './../../services/api';
 import { message } from 'antd'
 
 export const userLogin = ( reqObj ) => async dispatch => {
   dispatch({ type: 'LOADING' , payload: true})
 
   try {
-    const response = await axios.post('/api/users/login' , reqObj)
+    const response = await api.post('/api/users/login' , reqObj)
     localStorage.setItem('user' , JSON.stringify(response.data))
     message.success('Bem vindo!')
     
@@ -24,7 +24,7 @@ export const userRegister = ( reqObj ) => async dispatch => {
   dispatch({ type: 'LOADING' , payload: true})
 
   try {
-    const response = await axios.post('/api/users/register', reqObj)
+    const response = await api.post('/api/users/register', reqObj)
     if (response) {
         message.success('Usuário registrado!')
     }
@@ -41,7 +41,7 @@ export const userRegister = ( reqObj ) => async dispatch => {
 
 export const getUserName = ( reqObj ) => async dispatch => {
   try {
-    const response = await axios.get(`/api/user/getnameusuario/${reqObj}`)
+    const response = await api.get(`/api/user/getnameusuario/${reqObj}`)
     dispatch({type: 'GET_USER_NAME', payload: response.data})                
   } catch (error) {
     console.log(error)
