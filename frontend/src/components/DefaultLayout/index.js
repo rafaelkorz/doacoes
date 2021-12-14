@@ -1,10 +1,11 @@
 import React from "react";
 import { Menu, Dropdown, Button } from "antd";
 import { LogoutOutlined, UserOutlined, CheckOutlined, DollarOutlined } from '@ant-design/icons';
-import "./DefaultLayout.css";
+import "./style.css";
 
 function DefaultLayout(props) {
   const user = JSON.parse(localStorage.getItem('user'))
+
 
   function handleMenuClick(e) {
     if (e.key === "1") {    
@@ -52,7 +53,7 @@ function DefaultLayout(props) {
         >
           <h1 style={{ fontweight: 700}}>DOE, faça sua parte!</h1>
           <Dropdown overlay={menu} placement="bottomCenter">
-            <Button><UserOutlined />{user.username}</Button>
+            <Button><UserOutlined />Usuário: {user.username}</Button>
           </Dropdown>  
         </div>
       </div> 

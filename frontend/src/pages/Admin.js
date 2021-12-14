@@ -11,7 +11,7 @@ function Admin() {
   const { allDonations } = useSelector((state) => state.donationsReducer);
   const { loading } = useSelector(state => state.alertsReducer)
   const user = JSON.parse(localStorage.getItem('user'))
-
+  
   function getPaymentType(type) {
     if (type === 1) {
       return 'Cartão de crédito'
@@ -117,6 +117,7 @@ function Admin() {
       align: "center",
       render: (_, record) => (
         <Button
+          shape="circle" 
           disabled={record.reverse}                    
           onClick={() =>{
             record.reverse = true;
