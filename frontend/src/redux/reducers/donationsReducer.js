@@ -3,20 +3,19 @@ const initialData = {
 };
 
 export const donationsReducer = (state = initialData, action) => {
-   switch(action.type)
-   {
+   switch(action.type) {
       case 'GET_ALL_DONATIONS_USER' : {
         return {
-            ...state,
-            usersDonations : action.payload
+          ...state,
+          usersDonations : action.payload
         }
       }  
       case 'GET_ALL_DONATIONS' : {
-        return {
-            ...state,
-            allDonations : action.payload
+      return {
+          ...state,
+          allDonations : action.payload
         }
       }    
-       default: return state
+      default: return state
    }
 }

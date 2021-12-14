@@ -1,6 +1,5 @@
 import React from "react";
-import { Menu, Dropdown, Button, Row, Col } from "antd";
-import { Link } from 'react-router-dom'
+import { Menu, Dropdown, Button } from "antd";
 import { LogoutOutlined, UserOutlined, CheckOutlined, DollarOutlined } from '@ant-design/icons';
 import "./DefaultLayout.css";
 
@@ -45,7 +44,12 @@ function DefaultLayout(props) {
   return (
     <div>
       <div className="header">
-        <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 18, paddingLeft: 200, paddingRight: 200}}>
+        <div style={{ display: 'flex', 
+                      justifyContent: 'space-between', 
+                      paddingTop: 18, 
+                      paddingLeft: 200, 
+                      paddingRight: 200}}
+        >
           <h1 style={{ fontweight: 700}}>DOE, faça sua parte!</h1>
           <Dropdown overlay={menu} placement="bottomCenter">
             <Button><UserOutlined />{user.username}</Button>

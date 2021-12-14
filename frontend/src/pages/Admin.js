@@ -1,21 +1,17 @@
 import TableDonations from './../components/TableDonations'
 import { useEffect } from 'react'
-import {Button , Col , Form , Input, Card} from 'antd'
+import { Button } from 'antd'
 import { EditOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom'
-import { useDispatch , useSelector} from 'react-redux'
+import { useDispatch , useSelector } from 'react-redux'
 import { getAllDonation, reverseDonation } from '../redux/actions/donationsActions'
-import { getUserName } from '../redux/actions/userActions'
-import Spinner from '../components/Spinner';
-import DefaultLayout from './../components/DefaultLayout'
+import moment from 'moment'
 
 function Admin() {
   const dispatch = useDispatch()
   const { allDonations } = useSelector((state) => state.donationsReducer);
-  const { userName } = useSelector((state) => state.userReducer);
   const { loading } = useSelector(state => state.alertsReducer)
   const user = JSON.parse(localStorage.getItem('user'))
-  
+
   function getPaymentType(type) {
     if (type === 1) {
       return 'Cartão de crédito'
@@ -44,7 +40,7 @@ function Admin() {
       dataIndex: 'type_payment',
       key: 'type_payment',
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {getPaymentType(record)}
         </div>
       )
@@ -54,8 +50,8 @@ function Admin() {
       dataIndex: 'value',
       key: 'value',
       render: (record) => (
-        <div style={{fontSize:12}}>
-          {record}
+        <div style={{fontSize:14}}>
+          R$ {parseFloat(record).toLocaleString('pt-BR', 2)}
         </div>
       )
     },
@@ -63,18 +59,20 @@ function Admin() {
       title: 'Anônimo',
       dataIndex: 'anonymous',
       key: 'anonymous',
+      align: "center",
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {record ? 'Sim' : 'Não'}
         </div>
       )
     }, 
     {
-      title: 'Estorno',
+      title: 'Estonado',
       dataIndex: 'reverse',
       key: 'reverse',
+      align: "center",
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {record ? 'Sim' : 'Não'}
         </div>
       )
@@ -83,19 +81,32 @@ function Admin() {
       title: 'Status Pagamento',
       dataIndex: 'status',
       key: 'status',
+      align: "center",
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {getStatusPay(record)}
         </div>
       )
     }, 
     {
       title: 'Usuário',
-      dataIndex: 'idUsuario',
-      key: 'idUsuario',
+      dataIndex: 'name',
+      key: 'name',
+      align: "center",
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {record}
+        </div>
+      )
+    }, 
+    {
+      title: 'Data',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      align: "center",
+      render: (record) => (
+        <div style={{fontSize:14}}>
+          {moment(record).format('DD/MM/YYYY')}
         </div>
       )
     }, 
@@ -117,7 +128,6 @@ function Admin() {
         </Button>
       )
     }, 
-
   ];  
 
   useEffect(() => {
@@ -126,7 +136,13 @@ function Admin() {
 
   return (
     <>
-      {user.adm ? <TableDonations dataSource={allDonations} columnsDetails={columnsDetails} loading={loading}/> : window.location.href='/' }    
+      {user.adm ? 
+        <TableDonations 
+            dataSource={allDonations} 
+            columnsDetails={columnsDetails} 
+            loading={loading} 
+            adm={true}/> 
+      : window.location.href='/' }    
     </>
   )
 }

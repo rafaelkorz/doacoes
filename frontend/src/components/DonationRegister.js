@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { donationReg } from '../redux/actions/donationsActions'
 import DefaultLayout from "../components/DefaultLayout";
 import Spinner from "../components/Spinner";
-// import { addCar, editCar, getAllCars } from "../redux/actions/carsActions";
 
 function DonationRegister() {
   const { Step } = Steps;
   const user = JSON.parse(localStorage.getItem('user'))
   const { loading } = useSelector(state => state.alertsReducer)
+  const [current, setCurrent] = useState(0);
+  const formRef = useRef();
+  const [paymentType, setPaymentType] = useState(1);
 
   const dispatch = useDispatch()
 
@@ -24,10 +26,6 @@ function DonationRegister() {
       title: 'Confirmação',
     },
   ];
-
-  const [current, setCurrent] = useState(0);
-  const formRef = useRef();
-  const [paymentType, setPaymentType] = useState(1);
 
   const onChangeRadio = e => {
     setPaymentType(e.target.value);
@@ -75,7 +73,11 @@ function DonationRegister() {
           title="Informe o valor da doação"   
           size="small"   
           bordered={false}             
-          style={{ background: '#0E0E0E', borderRadius: '8px', marginTop: 20, marginBottom: 20, height: 180}}
+          style={{ background: '#0E0E0E', 
+                   borderRadius: '8px', 
+                   marginTop: 20, 
+                   marginBottom: 20, 
+                   height: 180}}
         >      
           <Form.Item name='value' label='Valor' rules={[{required: true}]}>
             <InputNumber/>
@@ -91,7 +93,11 @@ function DonationRegister() {
           size="small"  
           title="Informe a forma de pagamento"  
           bordered={false}                    
-          style={{ background: '#0E0E0E', borderRadius: '8px', marginTop: 20, marginBottom: 20, height: 180}}
+          style={{ background: '#0E0E0E', 
+                   borderRadius: '8px', 
+                   marginTop: 20, 
+                   marginBottom: 20, 
+                   height: 180}}
         >      
           <Radio.Group onChange={onChangeRadio} value={paymentType}>
           <Space direction="vertical">
@@ -111,9 +117,9 @@ function DonationRegister() {
           bordered={false}                    
           style={{ background: '#0E0E0E', borderRadius: '8px', marginTop: 20, marginBottom: 20, height: 180}}
         >      
-          <span  style={{fontSize: 14, fontWeight: 600}}>Valor doação: </span><span>R${formRef.current.getFieldValue('value')} </span> <br />
-          <span  style={{fontSize: 14, fontWeight: 600}}>Doação anônima? </span><span>{formRef.current.getFieldValue('anonymous') ? 'Sim' : 'Não'} </span> <br />
-          <span  style={{fontSize: 14, fontWeight: 600}}>Forma de pagamento: </span><span>{getPaymentType(paymentType)}</span>
+          <span  style={{fontSize: 14, fontWeight: 600 }}>Valor doação: </span><span>R${formRef.current.getFieldValue('value')} </span> <br />
+          <span  style={{fontSize: 14, fontWeight: 600 }}>Doação anônima? </span><span>{formRef.current.getFieldValue('anonymous') ? 'Sim' : 'Não'} </span> <br />
+          <span  style={{fontSize: 14, fontWeight: 600 }}>Forma de pagamento: </span><span>{getPaymentType(paymentType)}</span>
         </Card>
       )     
     }  
@@ -121,9 +127,14 @@ function DonationRegister() {
 
   return (
     <DefaultLayout>
-      <div style={{ height: '100%', display: 'flex',alignItems: 'center', justifyContent: 'space-around' }}>
-        <Card bordered={false} style={{ width: 600, height: 320,  borderRadius: '8px'}}>          
-         
+      <div style={{ height: '100%', 
+                    display: 'flex',
+                    alignItems: 'center', 
+                    justifyContent: 'space-around' }}>
+        <Card bordered={false} 
+              style={{ width: 600, 
+                       height: 320,
+                       borderRadius: '8px'}}>        
           <Steps current={current}>
             {steps.map(item => (
               <Step key={item.title} title={item.title} />
@@ -159,7 +170,6 @@ function DonationRegister() {
                   Voltar
                 </Button>
               )}
-              
             </div>
           </Form>
         </Card>

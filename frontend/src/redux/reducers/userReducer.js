@@ -3,14 +3,13 @@ const initialData = {
 };
 
 export const userReducer = (state = initialData, action) => {
-   switch(action.type)
-   {
+   switch(action.type) {
       case 'GET_USER_NAME' : {
         return {
-            ...state,
-            userName : action.payload
+          ...state,
+          userName : action.payload
         }
       }    
-       default: return state
+      default: return state
    }
 }

@@ -19,61 +19,61 @@ function Register() {
       <Card style={{ width: 500,  borderRadius: '8px'}} bordered={false}>
         {loading && (<Spinner />)}                
         <Form layout='vertical' onFinish={onFinish}>
-            <h1>Cadastre seu usuário</h1>
-            <hr style={{ marginBottom: 10}}/>
-            <Form.Item
-              name="name"
-              label="Name"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="cpf"
-              label="CPF"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="phone"
-              label="Telefone"              
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="username"
-              label="User"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              label="Password"
-              rules={[{ required: true }]}
-            >
-              <Input type="password"/>
-            </Form.Item>
-            <Button 
-                htmlType="submit"
-                loading={loading ? true : false}
-                type="primary"
-                style={{ marginBottom: 15}}>
-                Register
-            </Button>
-            <br />
-            <Link to="/login">Clique para logar</Link>
-            </Form>
-          </Card>
-        </div>
+          <h1>Cadastre seu usuário</h1>
+          <hr style={{ marginBottom: 10}}/>
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="cpf"
+            label="CPF"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            label="Telefone"              
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="username"
+            label="User"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[{ required: true }]}
+          >
+            <Input type="password"/>
+          </Form.Item>
+          <Button 
+              htmlType="submit"
+              loading={loading ? true : false}
+              type="primary"
+              style={{ marginBottom: 15}}>
+              Register
+          </Button>
+          <br />
+          <Link to="/login">Clique para logar</Link>
+        </Form>
+      </Card>
+    </div>
   );
 }
 

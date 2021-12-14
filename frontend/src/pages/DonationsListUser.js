@@ -1,11 +1,8 @@
 import TableDonations from './../components/TableDonations'
 import { useEffect } from 'react'
-import {Table , Col , Form , Input, Card} from 'antd'
-import { Link } from 'react-router-dom'
 import { useDispatch , useSelector} from 'react-redux'
-import { getUserDonation, getAllDonation } from '../redux/actions/donationsActions'
-import Spinner from '../components/Spinner';
-import DefaultLayout from './../components/DefaultLayout'
+import { getUserDonation } from '../redux/actions/donationsActions'
+import moment from 'moment'
 
 function DonationsListUser() {
   const dispatch = useDispatch()
@@ -41,7 +38,7 @@ function DonationsListUser() {
       dataIndex: 'type_payment',
       key: 'type_payment',
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {getPaymentType(record)}
         </div>
       )
@@ -51,27 +48,29 @@ function DonationsListUser() {
       dataIndex: 'value',
       key: 'value',
       render: (record) => (
-        <div style={{fontSize:12}}>
-          {record}
+        <div style={{fontSize:14}}>
+          R$ {parseFloat(record).toLocaleString('pt-BR', 2)}
         </div>
-      )
+      ) 
     },
     {
       title: 'Anônimo',
       dataIndex: 'anonymous',
       key: 'anonymous',
+      align: "center",
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {record ? 'Sim' : 'Não'}
         </div>
       )
     }, 
     {
-      title: 'Estorno',
+      title: 'Estonado',
       dataIndex: 'reverse',
       key: 'reverse',
+      align: "center",
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {record ? 'Sim' : 'Não'}
         </div>
       )
@@ -80,12 +79,24 @@ function DonationsListUser() {
       title: 'Status Pagamento',
       dataIndex: 'status',
       key: 'status',
+      align: "center",
       render: (record) => (
-        <div style={{fontSize:12}}>
+        <div style={{fontSize:14}}>
           {getStatusPay(record)}
         </div>
       )
-    },       
+    }, 
+    {
+      title: 'Data',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      align: "center",
+      render: (record) => (
+        <div style={{fontSize:14}}>
+          {moment(record).format('DD/MM/YYYY')}
+        </div>
+      )
+    },           
   ];  
 
   useEffect(() => {
@@ -93,7 +104,11 @@ function DonationsListUser() {
   }, []);
   return (
     <>
-      <TableDonations dataSource={usersDonations} columnsDetails={columnsDetails} loading={loading}/>
+      <TableDonations 
+        dataSource={usersDonations} 
+        columnsDetails={columnsDetails} 
+        loading={loading} 
+        adm={false}/>
     </>
   )
 }
