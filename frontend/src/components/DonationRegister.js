@@ -7,7 +7,7 @@ import Spinner from "../components/Spinner";
 
 function DonationRegister() {
   const { Step } = Steps;
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem('user'))   
   const { loading } = useSelector(state => state.alertsReducer)
   const [current, setCurrent] = useState(0);
   const formRef = useRef();
@@ -55,7 +55,7 @@ function DonationRegister() {
   
   function onFinish() {
     const data = {
-      idUsuario: user._id,
+      idUsuario: user?._id,
       value: formRef.current.getFieldValue('value'),
       anonymous: formRef.current.getFieldValue('anonymous') ? true : false,
       type_payment: paymentType,
@@ -117,8 +117,8 @@ function DonationRegister() {
           bordered={false}                    
           style={{ background: '#0E0E0E', borderRadius: '8px', marginTop: 20, marginBottom: 20, height: 180}}
         >      
-          <span  style={{fontSize: 14, fontWeight: 600 }}>Valor doação: </span><span>R${formRef.current.getFieldValue('value')} </span> <br />
-          <span  style={{fontSize: 14, fontWeight: 600 }}>Doação anônima? </span><span>{formRef.current.getFieldValue('anonymous') ? 'Sim' : 'Não'} </span> <br />
+          <span  style={{fontSize: 14, fontWeight: 600 }}>Valor doação: </span><span>R${formRef.current.getFieldValue('value')} </span> <br /><br />
+          <span  style={{fontSize: 14, fontWeight: 600 }}>Doação anônima? </span><span>{formRef.current.getFieldValue('anonymous') ? 'Sim' : 'Não'} </span> <br /><br />
           <span  style={{fontSize: 14, fontWeight: 600 }}>Forma de pagamento: </span><span>{getPaymentType(paymentType)}</span>
         </Card>
       )     

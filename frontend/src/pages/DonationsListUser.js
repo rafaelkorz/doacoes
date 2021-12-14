@@ -3,34 +3,13 @@ import { useEffect } from 'react'
 import { useDispatch , useSelector} from 'react-redux'
 import { getUserDonation } from '../redux/actions/donationsActions'
 import moment from 'moment'
+import { getPaymentType, getStatusPay} from './../helpers/helpers'
 
 function DonationsListUser() {
   const dispatch = useDispatch()
   const { usersDonations } = useSelector((state) => state.donationsReducer);
   const { loading } = useSelector(state => state.alertsReducer)
   const user = JSON.parse(localStorage.getItem('user'))
-  
-  function getPaymentType(type) {
-    if (type === 1) {
-      return 'Cartão de crédito'
-    } else if (type === 2) {
-      return 'PIX'
-    } else if (type === 3) {
-      return 'Boleto bancário'
-    } else {
-      return 'Débito em conta'
-    }        
-  }
-
-  function getStatusPay(type) {
-    if (type === 1) {
-      return 'Aprovado '
-    } else if (type === 2) {
-      return 'Andamento'
-    } else {
-      return 'Estornado'
-    }        
-  }
 
   const columnsDetails = [
     {
@@ -100,7 +79,8 @@ function DonationsListUser() {
   ];  
 
   useEffect(() => {
-    dispatch(getUserDonation(user._id));
+    dispatch(getUserDonation(user?._id));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

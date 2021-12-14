@@ -10,7 +10,7 @@ function Login() {
   const { loading } = useSelector(state => state.alertsReducer)
 
   function onFinish(values) {
-      dispatch(userLogin(values))        
+    dispatch(userLogin(values))        
   }
     
   return (
@@ -37,7 +37,7 @@ function Login() {
               Login
             </Button>
             <br />
-            <Link to='/register'>Click Here to Register</Link>
+            <Link to='/register'>Cadastrar usuário</Link>
           </Form>
           }                
       </Card>

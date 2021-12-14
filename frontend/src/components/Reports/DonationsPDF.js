@@ -1,32 +1,10 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import moment from 'moment'
+import { getPaymentType, getStatusPay } from './../../helpers/helpers'
 
 function DonationsPDF(donations){
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-  function getPaymentType(type) {
-    if (type === 1) {
-      return 'Cartão de crédito'
-    } else if (type === 2) {
-      return 'PIX'
-    } else if (type === 3) {
-      return 'Boleto bancário'
-    } else {
-      return 'Débito em conta'
-    }        
-  }
-    
-  function getStatusPay(type) {
-    if (type === 1) {
-      return 'Aprovado '
-    } else if (type === 2) {
-      return 'Andamento'
-    } else {
-      return 'Estornado'
-    }        
-  }
-
   const reportTitle = [
     {
       text: 'Doações',

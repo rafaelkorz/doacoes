@@ -5,34 +5,13 @@ import { EditOutlined } from '@ant-design/icons';
 import { useDispatch , useSelector } from 'react-redux'
 import { getAllDonation, reverseDonation } from '../redux/actions/donationsActions'
 import moment from 'moment'
+import { getPaymentType, getStatusPay} from './../helpers/helpers'
 
 function Admin() {
   const dispatch = useDispatch()
   const { allDonations } = useSelector((state) => state.donationsReducer);
-  const { loading } = useSelector(state => state.alertsReducer)
+  const { loading } = useSelector(state => state.alertsReducer)  
   const user = JSON.parse(localStorage.getItem('user'))
-  
-  function getPaymentType(type) {
-    if (type === 1) {
-      return 'Cartão de crédito'
-    } else if (type === 2) {
-      return 'PIX'
-    } else if (type === 3) {
-      return 'Boleto bancário'
-    } else {
-      return 'Débito em conta'
-    }        
-  }
-
-  function getStatusPay(type) {
-    if (type === 1) {
-      return 'Aprovado '
-    } else if (type === 2) {
-      return 'Andamento'
-    } else {
-      return 'Estornado'
-    }        
-  }
 
   const columnsDetails = [
     {
@@ -133,16 +112,17 @@ function Admin() {
 
   useEffect(() => {
       dispatch(getAllDonation()); 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {user.adm ? 
+      {user?.adm ? 
         <TableDonations 
-            dataSource={allDonations} 
-            columnsDetails={columnsDetails} 
-            loading={loading} 
-            adm={true}/> 
+          dataSource={allDonations} 
+          columnsDetails={columnsDetails} 
+          loading={loading} 
+          adm={true}/> 
       : window.location.href='/' }    
     </>
   )

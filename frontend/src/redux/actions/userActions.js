@@ -10,9 +10,9 @@ export const userLogin = ( reqObj ) => async dispatch => {
     message.success('Bem vindo!')
     
     setTimeout(() => {
-        window.location.href='/'
-        dispatch({ type: 'LOADING' , payload: false})
-    }, 2000);        
+      window.location.href='/'
+      dispatch({ type: 'LOADING' , payload: false})
+    }, 1500);        
   } catch (error) {
     console.log(error)
     message.error('Usuário/Senha incorreta! ')
@@ -25,6 +25,7 @@ export const userRegister = ( reqObj ) => async dispatch => {
 
   try {
     const response = await api.post('/api/users/register', reqObj)
+    
     if (response) {
         message.success('Usuário registrado!')
     }
@@ -36,14 +37,5 @@ export const userRegister = ( reqObj ) => async dispatch => {
     console.log(error)
     message.error('Email/CPF já existe na base! ')
     dispatch({ type: 'LOADING', payload: false})
-  }
-}
-
-export const getUserName = ( reqObj ) => async dispatch => {
-  try {
-    const response = await api.get(`/api/user/getnameusuario/${reqObj}`)
-    dispatch({type: 'GET_USER_NAME', payload: response.data})                
-  } catch (error) {
-    console.log(error)
   }
 }

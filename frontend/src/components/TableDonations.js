@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
-import {Table , Button , Form , DatePicker, Card, Checkbox, Dropdown, Menu} from 'antd';
+import { Table , Button , Form , DatePicker, Card, Checkbox, Dropdown, Menu} from 'antd';
 import moment from "moment";
 import { useDispatch } from 'react-redux';
 import { getAllDonationDates } from '../redux/actions/donationsActions';
 import Spinner from '../components/Spinner';
 import DefaultLayout from './../components/DefaultLayout'
 import { SearchOutlined, FileDoneOutlined, DownOutlined } from '@ant-design/icons';
-import DonationsPDF from '../components/Reports/DonationsPDF';
+import DonationsPDF from '../components/reports/DonationsPDF';
+import DonationsXLS from '../components/reports/DonationsXLS';
 
 function TableDonations({dataSource, columnsDetails, loading, adm}) {
   const { RangePicker } = DatePicker;  
@@ -32,7 +33,7 @@ function TableDonations({dataSource, columnsDetails, loading, adm}) {
       <Menu.Item onClick={() => DonationsPDF(dataSource)}> 
         PDF        
       </Menu.Item>
-      <Menu.Item onClick={() => DonationsPDF(dataSource)}>      
+      <Menu.Item onClick={() => DonationsXLS(dataSource)}>      
         XLS
       </Menu.Item>
     </Menu>
@@ -104,8 +105,7 @@ function TableDonations({dataSource, columnsDetails, loading, adm}) {
               </Button> 
             </Dropdown>
             </div>
-          </div>
-                    :
+          </div> :
           <></>
         }
         <Card 
@@ -122,7 +122,7 @@ function TableDonations({dataSource, columnsDetails, loading, adm}) {
                 columns={columnsDetails} 
                 rowKey={(record) => record._id}
                 scroll={{ x: "none", y: "400px" }}
-                pagination={{ pageSize: 50 }}        
+                pagination={{ pageSize: 10 }}        
               /> 
             }                
         </Card>

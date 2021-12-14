@@ -19,7 +19,7 @@ function Register() {
       <Card style={{ width: 500,  borderRadius: '8px'}} bordered={false}>
         {loading && (<Spinner />)}                
         <Form layout='vertical' onFinish={onFinish}>
-          <h1>Cadastre seu usuário</h1>
+          <h3>Dados pessoais</h3>
           <hr style={{ marginBottom: 10}}/>
           <Form.Item
             name="name"
@@ -33,7 +33,7 @@ function Register() {
             label="Email"
             rules={[{ required: true }]}
           >
-            <Input />
+            <Input type="email"/>
           </Form.Item>
           <Form.Item
             name="cpf"
@@ -48,6 +48,8 @@ function Register() {
           >
             <Input />
           </Form.Item>
+          <h3>Login</h3>
+          <hr style={{ marginBottom: 10}}/>
           <Form.Item
             name="username"
             label="User"
