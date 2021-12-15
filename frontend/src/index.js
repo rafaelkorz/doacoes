@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import { Provider } from 'react-redux'
+import 'dotenv/config';
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
