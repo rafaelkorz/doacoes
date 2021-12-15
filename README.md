@@ -19,7 +19,7 @@ Abra o projeto em uma IDE de sua preferência.
 - Cadastro de novos usuários somente conseguem fazer doações e não pesquisas doeções de outros doadores ou gerar relatórios.
 - Execute ```yarn server```
 
-## Fronend
+## Frontend
 - Execute as intalações de dependência ```yarn install```
 - Configuração **.ENV**  ```APP_URL=http://localhost:5000```
 - Execute ```yarn start```
