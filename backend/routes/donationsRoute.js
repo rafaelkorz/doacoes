@@ -6,13 +6,14 @@ const User = require("../models/userModel")
 router.get("/getalldonation", async (req, res) => {
   try {      
     let user;
-    const donations = await Donation.find();
-    
+
+    donations = await Donation.find();
+
     let newDonation = donations.map( async (donation) => {
       await User.findOne({ _id: donation.idUsuario }).then((data) => user = data);
       return {...donation.toObject(), name: user.name}
     })
-
+    
     Promise.all(newDonation).then((result) =>res.send(result))
   } catch (error) {
     return res.status(400).json(error);
