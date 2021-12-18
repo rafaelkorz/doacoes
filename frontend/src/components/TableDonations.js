@@ -6,8 +6,8 @@ import { getAllDonationDates } from '../redux/actions/donationsActions';
 import Spinner from '../components/Spinner';
 import DefaultLayout from './../components/DefaultLayout'
 import { SearchOutlined, FileDoneOutlined, DownOutlined } from '@ant-design/icons';
-import DonationsPDF from '../components/reports/DonationsPDF';
-import DonationsXLS from '../components/reports/DonationsXLS';
+import DonationsPDF from '../components/Reports/DonationsPDF';
+import DonationsXLS from '../components/Reports/DonationsXLS';
 
 function TableDonations({dataSource, columnsDetails, loading, adm}) {
   const { RangePicker } = DatePicker;  
