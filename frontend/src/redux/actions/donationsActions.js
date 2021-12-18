@@ -65,7 +65,7 @@ export const getAllDonation = () => async dispatch => {
 export const getAllDonationDates = (reqObj) => async dispatch => {
   dispatch({ type: 'LOADING' , payload: true})
   try {
-    const response = await api.get('/api/donation/getalldonationdates', { params: reqObj});
+    const response = await api.get('/api/donation/getalldonationdates', { params: reqObj });
 
     dispatch({type: 'GET_ALL_DONATIONS', payload: response.data})                
     setTimeout(() => {            

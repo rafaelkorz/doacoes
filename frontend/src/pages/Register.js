@@ -10,7 +10,6 @@ function Register() {
   const { loading } = useSelector(state => state.alertsReducer)
 
   function onFinish(values) {
-    values.adm = false;
     dispatch(userRegister(values))
   }
 

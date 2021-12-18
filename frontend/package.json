@@ -4,12 +4,15 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@stripe/stripe-js": "^1.22.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/stripe": "^8.0.417",
     "antd": "^4.16.13",
     "aos": "^2.3.4",
     "axios": "^0.23.0",
+    "dotenv": "^10.0.0",
     "moment": "^2.29.1",
     "pdfmake": "^0.2.4",
     "react": "^17.0.2",
@@ -46,6 +49,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:5000/"
+  }
 }
