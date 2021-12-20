@@ -6,9 +6,9 @@ const User = require("../models/userModel")
 router.get("/price", async (req, res) => {
   // const { username , password } = req.body
 
-  const donation1 = await stripe.prices.retrieve("price_1K73JSI1p3LsZoFs3sbqFaT5");
-  const donation2 = await stripe.prices.retrieve("price_1K7oNsI1p3LsZoFsMgsQxdJr");
-  const donation3 = await stripe.prices.retrieve("price_1K7otyI1p3LsZoFsmudWIJL9");
+  const donation1 = await stripe.prices.retrieve(process.env.STRIPE_PRICE_1);
+  const donation2 = await stripe.prices.retrieve(process.env.STRIPE_PRICE_2);
+  const donation3 = await stripe.prices.retrieve(process.env.STRIPE_PRICE_3);
   
   let donations = [];
 
@@ -42,10 +42,10 @@ router.get("/price", async (req, res) => {
   res.send(donations)
 });
 
-router.post("/subscribe", async (req, res) => {
+router.post("/payment", async (req, res) => {
   if (req.method === 'POST') {
       let user = await User.findOne({ email: req.body.email });
-  
+        
       let custumerId = user?.stripe_custumer_id;
 
       if (!custumerId) {
@@ -59,20 +59,40 @@ router.post("/subscribe", async (req, res) => {
 
         custumerId = stripeCustomer.id;
       }
-  
-      const stripeCheckoutSession = await stripe.checkout.sessions.create({
-        customer: custumerId,
-        payment_method_types: ['card'],
-        billing_address_collection: 'auto',
-        line_items: [
-          { price: req.body.priceId, quantity: 1}
-        ],
-        mode: 'payment',
-        success_url: process.env.STRIPE_SUCCESS_URL,
-        cancel_url: process.env.STRIPE_CANCEL_URL
-      })
 
-      res.status(200).json({ sessionId: stripeCheckoutSession.id})
+      let paymentMethod;
+      console.log(req.body.typePayment);
+      switch (req.body.typePayment) {
+        case 1:
+          paymentMethod = 'card'
+        break;
+        case 3:
+          paymentMethod = 'boleto'
+        break;              
+        default:
+          throw new Error('Available Method')
+      }
+
+      try {
+        const stripeCheckoutSession = await stripe.checkout.sessions.create({
+          customer: custumerId,
+          payment_method_types: [paymentMethod],
+          billing_address_collection: 'auto',
+          line_items: [
+            { price: req.body.priceId, quantity: 1}
+          ],
+          mode: 'payment',
+          success_url: process.env.STRIPE_SUCCESS_URL,
+          cancel_url: process.env.STRIPE_CANCEL_URL
+        })
+  
+        res.status(200).json({ sessionId: stripeCheckoutSession.id})
+      } catch (err) {
+        console.log(err);
+      }
+  
+
+      // console.log(stripeCheckoutSession.id)
     } else {
       res.setHeader('Allow', 'POST')
       res.status(405).end('Methos not allowed');
