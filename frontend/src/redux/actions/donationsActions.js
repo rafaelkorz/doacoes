@@ -9,29 +9,14 @@ export const donationReg = ( reqObj ) => async dispatch => {
     message.success('Doação realizada!')
 
     dispatch({ type: 'LOADING' , payload: false})
+    
     setTimeout(() => {
         window.location.href='/'
     }, 1000);
+
   } catch (error) {
     console.log(error)
     message.error('Não foi possível realizar a doação!')
-    dispatch({ type: 'LOADING' , payload: false})
-  }
-}
-
-export const getUserDonation = ( reqObj ) => async dispatch => {    
-  dispatch({ type: 'LOADING' , payload: true})
-
-  try {
-    const response = await api.get(`/api/donation/getalluserdonation/${reqObj}`)          
-
-    dispatch({type: 'GET_ALL_DONATIONS_USER', payload: response.data})                
-    setTimeout(() => {            
-        dispatch({ type: 'LOADING' , payload: false})
-    }, 1000);
-  } catch (error) {
-    console.log(error)
-    message.error('Não foi possível carregar suas doações!')
     dispatch({ type: 'LOADING' , payload: false})
   }
 }
@@ -51,10 +36,12 @@ export const getAllDonation = () => async dispatch => {
   try {
     const response = await api.get('/api/donation/getalldonation')          
 
-    dispatch({type: 'GET_ALL_DONATIONS', payload: response.data})                
+    dispatch({type: 'GET_ALL_DONATIONS', payload: response.data})     
+
     setTimeout(() => {            
         dispatch({ type: 'LOADING' , payload: false})
     }, 1000);
+
   } catch (error) {
     console.log(error)
     message.error('Não foi possível carregar as doações!')

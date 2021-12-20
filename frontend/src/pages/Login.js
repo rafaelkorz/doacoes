@@ -14,7 +14,11 @@ function Login() {
   }
     
   return (
-    <div style={{ height: '100%', display: 'flex',alignItems: 'center', justifyContent: 'space-around' }}>
+    <div style={{ height: '100%', 
+                  display: 'flex',
+                  alignItems: 'center', 
+                  justifyContent: 'space-around' }}
+    >
       <Card style={{ width: 500,  borderRadius: '8px'}} bordered={false}>
         {loading ? 
         <div style={{height: 300}}>

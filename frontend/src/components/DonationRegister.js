@@ -1,5 +1,5 @@
-import { Button, Card } from "antd";
-import { useEffect } from "react";
+import { Button, Card, Modal, Radio, Space  } from "antd";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { stripePriceAction } from '../redux/actions/stripeActions'
 import DefaultLayout from "../components/DefaultLayout";
@@ -7,8 +7,11 @@ import { getStripeJs } from './../services/stripe';
 import api from './../services/api'
 
 function DonationRegister() {
-  const user = JSON.parse(localStorage.getItem('user'))   
-  const { stripePrice  } = useSelector(state => state.stripeReducer)
+  const { stripePrice } = useSelector(state => state.stripeReducer);
+  const { user } = useSelector(state => state.userReducer);
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [typePayment, setTypePayment] = useState(1);
+  const [priceId, setPriceId] = useState('');
 
   const dispatch = useDispatch();
 
@@ -17,14 +20,22 @@ function DonationRegister() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const subscribeButtonOne = async (priceId) => {
+  const onChangePayment = (e) => {
+    setTypePayment(e.target.value)
+  }
+
+  const paymentButton = async () => {
     try {
+      setVisibleModal(false)
+      setTypePayment(1)
+      
       const data = {
-        email: user.email,
-        priceId
+        email: user?.email,
+        priceId,
+        typePayment
       }
 
-      const response = await api.post('/api/stripe/subscribe', data);
+      const response = await api.post('/api/stripe/payment', data);
 
       const stripe = await getStripeJs();
       await stripe.redirectToCheckout({ sessionId: response.data.sessionId });
@@ -54,21 +65,33 @@ function DonationRegister() {
               <Button 
                 type={'primary'} 
                 style={{ marginBottom: 10 }}
-                onClick={() => subscribeButtonOne(stripePrice[0].priceId)}
+                onClick={() => {
+                  setVisibleModal(true)
+                  setPriceId(stripePrice[0].priceId)                  
+                  }
+                }
                 >
                   {stripePrice[0].amount}
               </Button> 
               <Button 
                 type={'primary'} 
                 style={{ marginBottom: 10 }}
-                onClick={() => subscribeButtonOne(stripePrice[1].priceId)}
+                onClick={() => {
+                  setVisibleModal(true)
+                  setPriceId(stripePrice[1].priceId)                  
+                  }
+                }
                 >
                   {stripePrice[1].amount}
               </Button> 
               <Button 
                 type={'primary'} 
                 style={{ marginBottom: 10 }}
-                onClick={() => subscribeButtonOne(stripePrice[2].priceId)}
+                onClick={() => {
+                    setVisibleModal(true)
+                    setPriceId(stripePrice[2].priceId)                  
+                  }
+                }
                 >
                   {stripePrice[2].amount}
               </Button>
@@ -77,6 +100,25 @@ function DonationRegister() {
           }          
         </Card>
       </div>
+      <Modal  
+          title="Forma de pagamento" 
+          visible={visibleModal} 
+          onOk={() => paymentButton()} 
+          onCancel={() => {
+            setVisibleModal(false)  
+            setTypePayment(1)}
+        }
+      >
+        <Radio.Group 
+          onChange={(e) => onChangePayment(e)} 
+          value={typePayment}
+        >
+          <Space direction="vertical">
+            <Radio value={1}>Cartão de crédito</Radio>
+            <Radio value={3}>Boleto bancário</Radio>
+          </Space>
+        </Radio.Group>
+      </Modal> 
     </DefaultLayout>
   );
 }

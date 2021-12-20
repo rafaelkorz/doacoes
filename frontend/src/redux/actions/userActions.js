@@ -5,8 +5,9 @@ export const userLogin = ( reqObj ) => async dispatch => {
   dispatch({ type: 'LOADING' , payload: true})
 
   try {
-    const response = await api.post('/api/users/login' , reqObj)
+    const response = await api.post('/api/users/login', reqObj)
     localStorage.setItem('user' , JSON.stringify(response.data))
+    dispatch({ type: 'GET_USER_LOGGED', payload: response.data})
     
     message.success('Bem vindo!')
     

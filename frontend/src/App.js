@@ -1,4 +1,5 @@
 import {Route , BrowserRouter , Redirect} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -22,7 +23,10 @@ function App() {
 export default App;
 
 export function ProtectedRoute(props) {
+  const dispatch = useDispatch()
+
   const user = JSON.parse(localStorage.getItem('user'))
+  dispatch({ type: 'GET_USER_LOGGED' , payload: user})
   if (user) {  
     return <Route {...props}/>
   } else {

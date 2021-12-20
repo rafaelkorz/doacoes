@@ -1,15 +1,14 @@
 import TableDonations from './../components/TableDonations'
-import { useEffect } from 'react'
-import { useDispatch , useSelector} from 'react-redux'
-import { getUserDonation } from '../redux/actions/donationsActions'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import api from './../services/api';
 import moment from 'moment'
 import { getPaymentType, getStatusPay} from './../helpers/helpers'
 
 function DonationsListUser() {
-  const dispatch = useDispatch()
-  const { usersDonations } = useSelector((state) => state.donationsReducer);
   const { loading } = useSelector(state => state.alertsReducer)
-  const user = JSON.parse(localStorage.getItem('user'))
+  const [usersDonations, setUsersDonations] = useState();
+  const { user } = useSelector(state => state.userReducer);
 
   const columnsDetails = [
     {
@@ -44,7 +43,7 @@ function DonationsListUser() {
       )
     }, 
     {
-      title: 'Estonado',
+      title: 'Estornado',
       dataIndex: 'reverse',
       key: 'reverse',
       align: "center",
@@ -79,9 +78,12 @@ function DonationsListUser() {
   ];  
 
   useEffect(() => {
-    dispatch(getUserDonation(user?._id));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    async function fetchData() {
+      const response = await api.get(`/api/donation/getalluserdonation/${user?._id}`);        
+      setUsersDonations(response.data);
+    }
+    fetchData();
+  }, [user?._id]);
   return (
     <>
       <TableDonations 

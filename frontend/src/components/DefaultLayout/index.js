@@ -1,9 +1,10 @@
 import { Menu, Dropdown, Button } from "antd";
+import { useSelector } from "react-redux";
 import { LogoutOutlined, UserOutlined, CheckOutlined, DollarOutlined } from '@ant-design/icons';
 import "./style.css";
 
 function DefaultLayout(props) {  
-  const user = JSON.parse(localStorage.getItem('user'))  
+  const { user } = useSelector(state => state.userReducer)
 
   function handleMenuClick(e) {
     if (e.key === "1") {    

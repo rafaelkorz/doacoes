@@ -1,6 +1,5 @@
 const initialData = {
   stripePrice: [],
-  stripeSession: {}
 };
 
 export const stripeReducer = (state = initialData, action) => {

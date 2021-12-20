@@ -1,5 +1,5 @@
 const initialData = {
-  userLogged : {},
+  user : {},
 };
 
 export const userReducer = (state = initialData, action) => {
@@ -7,7 +7,7 @@ export const userReducer = (state = initialData, action) => {
     case 'GET_USER_LOGGED' : {
       return {
         ...state,
-        userLogged : action.payload
+        user : action.payload
       }
     }
     default : return state

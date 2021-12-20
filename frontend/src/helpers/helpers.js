@@ -14,7 +14,7 @@ export const getStatusPay = (type) => {
   if (type === 1) {
     return 'Aprovado '
   } else if (type === 2) {
-    return 'Andamento'
+    return 'Aberto'
   } else {
     return 'Estornado'
   }        

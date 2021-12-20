@@ -10,8 +10,8 @@ import { getPaymentType, getStatusPay} from './../helpers/helpers'
 function Admin() {
   const dispatch = useDispatch()
   const { allDonations } = useSelector((state) => state.donationsReducer);
-  const { loading } = useSelector(state => state.alertsReducer)  
-  const user = JSON.parse(localStorage.getItem('user'))
+  const { loading } = useSelector(state => state.alertsReducer);
+  const { user } = useSelector(state => state.userReducer);
 
   const columnsDetails = [
     {
@@ -46,7 +46,7 @@ function Admin() {
       )
     }, 
     {
-      title: 'Estonado',
+      title: 'Estornado',
       dataIndex: 'reverse',
       key: 'reverse',
       align: "center",

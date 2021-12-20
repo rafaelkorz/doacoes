@@ -4,13 +4,7 @@ const initialData = {
 };
 
 export const donationsReducer = (state = initialData, action) => {
-    switch(action.type) {
-      case 'GET_ALL_DONATIONS_USER' : {
-        return {
-          ...state,
-          usersDonations : action.payload
-        }
-      }  
+    switch (action.type) { 
       case 'GET_ALL_DONATIONS' : {
       return {
           ...state,
