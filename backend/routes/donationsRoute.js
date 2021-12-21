@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Donation = require("../models/donationModel")
 const User = require("../models/userModel")
+const auth_middleware = require("../middlewares/auth.middleware");
 
-router.get("/getalldonation", async (req, res) => {
+router.get("/getalldonation",  async (req, res) => {
   try {      
     let user;
 
