@@ -1,7 +1,7 @@
 import TableDonations from './../components/TableDonations'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import api from './../services/api';
+import {apiJWT} from './../services/api';
 import moment from 'moment'
 import { getPaymentType, getStatusPay} from './../helpers/helpers'
 
@@ -79,7 +79,7 @@ function DonationsListUser() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await api.get(`/api/donation/getalluserdonation/${user?._id}`);        
+      const response = await apiJWT.get(`/api/donation/getalluserdonation/${user?._id}`);        
       setUsersDonations(response.data);
     }
     fetchData();

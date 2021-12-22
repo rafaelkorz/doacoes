@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { stripePriceAction } from '../redux/actions/stripeActions'
 import DefaultLayout from "../components/DefaultLayout";
 import { getStripeJs } from './../services/stripe';
-import api from './../services/api'
+import {api} from './../services/api'
 
 function DonationRegister() {
   const { stripePrice } = useSelector(state => state.stripeReducer);

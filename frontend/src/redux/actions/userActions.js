@@ -1,4 +1,4 @@
-import api from './../../services/api';
+import {api} from './../../services/api';
 import { message } from 'antd'
 
 export const userLogin = ( reqObj ) => async dispatch => {
@@ -6,6 +6,7 @@ export const userLogin = ( reqObj ) => async dispatch => {
 
   try {
     const response = await api.post('/api/users/login', reqObj)
+    console.log('teste', response.data)
     localStorage.setItem('user' , JSON.stringify(response.data))
     dispatch({ type: 'GET_USER_LOGGED', payload: response.data})
     
