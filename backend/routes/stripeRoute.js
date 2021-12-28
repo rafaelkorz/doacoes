@@ -2,10 +2,9 @@ const express = require("express")
 const router = express.Router()
 const stripe  = require("./../stripe/stripe")
 const User = require("../models/userModel")
+const auth_middleware = require("../middlewares/auth.middleware");
 
 router.get("/price", async (req, res) => {
-  // const { username , password } = req.body
-
   const donation1 = await stripe.prices.retrieve(process.env.STRIPE_PRICE_1);
   const donation2 = await stripe.prices.retrieve(process.env.STRIPE_PRICE_2);
   const donation3 = await stripe.prices.retrieve(process.env.STRIPE_PRICE_3);
@@ -42,7 +41,7 @@ router.get("/price", async (req, res) => {
   res.send(donations)
 });
 
-router.post("/payment", async (req, res) => {
+router.post("/payment", auth_middleware.verifyToken, async (req, res) => {
   if (req.method === 'POST') {
       let user = await User.findOne({ email: req.body.email });
         
@@ -91,8 +90,6 @@ router.post("/payment", async (req, res) => {
         console.log(err);
       }
   
-
-      // console.log(stripeCheckoutSession.id)
     } else {
       res.setHeader('Allow', 'POST')
       res.status(405).end('Methos not allowed');

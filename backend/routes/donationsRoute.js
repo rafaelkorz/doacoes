@@ -4,7 +4,7 @@ const Donation = require("../models/donationModel")
 const User = require("../models/userModel")
 const auth_middleware = require("../middlewares/auth.middleware");
 
-router.get("/getalldonation",  async (req, res) => {
+router.get("/getalldonation", auth_middleware.verifyToken, async (req, res) => {
   try {      
     let user;
 
@@ -21,7 +21,7 @@ router.get("/getalldonation",  async (req, res) => {
   }
 });
 
-router.get("/getalldonationdates", async (req, res) => {
+router.get("/getalldonationdates", auth_middleware.verifyToken, async (req, res) => {
   try {      
     let user;
     let donations;
@@ -67,11 +67,11 @@ router.post("/adddonation", async (req, res) => {
   }
 });
 
-router.post("/editdonation/:id", async (req, res) => {
+router.post("/editdonation/:id", auth_middleware.verifyToken, async (req, res) => {
   try {
     const donation = await Donation.findOne({ _id: req.params.id });
 
-    const {idUsuario, value, anonymous, type_payment, reverse, status } = req.body;
+    const { idUsuario, value, anonymous, type_payment, reverse, status } = req.body;
 
     donation.idUsuario = idUsuario;
     donation.value = value;
@@ -88,7 +88,7 @@ router.post("/editdonation/:id", async (req, res) => {
   }
 });
 
-router.post("/deletedonation", async (req, res) => {
+router.post("/deletedonation", auth_middleware.verifyToken, async (req, res) => {
   try {
     await Donation.findOneAndDelete({ _id: req.body._id });
 

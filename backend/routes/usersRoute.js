@@ -49,25 +49,16 @@ router.post("/register", async(req, res) => {
   }
 });
 
-router.get("/getnameusuario/:id", async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: req.params.id });
-    const { name } = user;
-    res.send(name);
-  } catch (error) {
-    return res.status(400).json(error);
-  }
-});
-
 router.post("/refresh", (req, res) => {
-  //take the refresh token from the user
   const refreshToken = req.body.token;
 
-  //send error if there is no token or it's invalid
-  if (!refreshToken) return res.status(401).json("You are not authenticated!");
+  if (!refreshToken) {
+    return res.status(401).json("You are not authenticated!");
+  } 
   if (!refreshTokens.includes(refreshToken)) {
     return res.status(403).json("Refresh token is not valid!");
   }
+
   jwt.verify(refreshToken, "myRefreshSecretKey", (err, user) => {
     err && console.log(err);
     refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
@@ -82,11 +73,7 @@ router.post("/refresh", (req, res) => {
       refreshToken: newRefreshToken,
     });
   });
-
-  //if everything is ok, create new access token, refresh token and send to user
 });
-
-
 
 router.post("/logout", (req, res) => {
   const refreshToken = req.body.token;
