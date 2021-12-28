@@ -99,8 +99,8 @@ function TableDonations({dataSource, columnsDetails, loading, adm}) {
             <div style={{ marginLeft: 150}}>
             <Dropdown overlay={menu} placement="bottomCenter" arrow key="1">
               <Button 
-              icon={<FileDoneOutlined />}        
-              type="primary">
+                icon={<FileDoneOutlined />}        
+                type="primary">
                 Relatórios <DownOutlined />
               </Button> 
             </Dropdown>

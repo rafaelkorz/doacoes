@@ -37,7 +37,12 @@ apiJWT.interceptors.request.use(
     
     if (decodedToken.exp * 1000 < currentDate.getTime()) {
       const data = await refreshToken();
-      config.headers["authorization"] = "Bearer " + data.accessToken;
+      if (data?.accessToken) {
+        config.headers["authorization"] = "Bearer " + data.accessToken;
+      } else {
+        localStorage.removeItem('user');
+        window.location.href='/login'
+      }
     }
 
     return config;
