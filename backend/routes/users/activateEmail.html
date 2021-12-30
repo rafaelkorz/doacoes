@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account activate</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: rgb(112, 160, 73);
+    }
+    .container {
+      height: 100vh;      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .bt {
+      height: 40px;
+      width: 150px;
+      border-radius: 5px;
+      border: none;
+      
+      transition: 0.2s;
+    }
+    .bt:hover {
+      background: rgb(166, 168, 166);
+    }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your email has been activated</h1>
+    <br/>
+    <form action="http://localhost:3000/login">
+      <button class="bt" type="submit">LOGIN</button>
+    </form>
+  </div>
+</body>
+</html>

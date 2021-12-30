@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 
 const relevantEvents = new Set([
   'checkout.session.completed',
- 'customer.deleted'
+  'customer.deleted'
 ])
 
 router.post('/webhooks', bodyParser.raw({ type: '*/*'}), async (req, res) => {
@@ -59,10 +59,7 @@ router.post('/webhooks', bodyParser.raw({ type: '*/*'}), async (req, res) => {
       } catch (err) {
         return res.json({ error: 'Webhook handler failed' })
       }
-
-
     }
-  
     res.json({ received: true})
 });
 

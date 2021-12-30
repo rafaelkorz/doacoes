@@ -12,7 +12,7 @@ app.use('/api/stripe/', require('./routes/webhooksRoute'))
 app.use(express.json())
 
 app.use('/api/stripe/', require('./routes/stripeRoute'))
-app.use('/api/users/', require('./routes/usersRoute'))
+app.use('/api/users/', require('./routes/users/usersRoute'))
 app.use('/api/donation/', require('./routes/donationsRoute'))
 
 app.get('/', (req, res) => res.send('Hello World!'))
