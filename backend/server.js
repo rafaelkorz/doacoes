@@ -14,6 +14,7 @@ app.use(express.json())
 app.use('/api/stripe/', require('./routes/stripeRoute'))
 app.use('/api/users/', require('./routes/users/usersRoute'))
 app.use('/api/donation/', require('./routes/donationsRoute'))
+app.use('/api/authentication/', require('./routes/users/auth'))
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
