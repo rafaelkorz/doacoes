@@ -13,7 +13,7 @@ const refreshToken = async () => {
   try {
     const user = JSON.parse(localStorage.getItem('user'))
 
-    const res = await api.post("/api/users/refresh", { token: user.refreshToken });
+    const res = await api.post("/api/authentication/refresh", { token: user.refreshToken });
 
     user.accessToken = res.data.accessToken;
     user.refreshToken = res.data.refreshToken;
@@ -37,6 +37,7 @@ apiJWT.interceptors.request.use(
     
     if (decodedToken.exp * 1000 < currentDate.getTime()) {
       const data = await refreshToken();
+      console.log(data)
       if (data?.accessToken) {
         config.headers["authorization"] = "Bearer " + data.accessToken;
       } else {

@@ -1,12 +1,13 @@
 import { Menu, Dropdown, Button } from "antd";
 import { useSelector } from "react-redux";
 import { LogoutOutlined, UserOutlined, CheckOutlined, DollarOutlined } from '@ant-design/icons';
+import { api } from "./../../services/api"
 import "./style.css";
 
 function DefaultLayout(props) {  
   const { user } = useSelector(state => state.userReducer)
 
-  function handleMenuClick(e) {
+  async function handleMenuClick(e) {
     if (e.key === "1") {    
       window.location.href='/'
     } else if (e.key === "2") {    
@@ -14,6 +15,8 @@ function DefaultLayout(props) {
     } else if (e.key === "3") {    
       window.location.href='/admin'
     } else  if (e.key === "4") {
+      const user = JSON.parse(localStorage.getItem('user'))
+      await api.post('/api/authentication/logout', { token: user.refreshToken });
       localStorage.removeItem('user');
       window.location.href='/login'
     }    

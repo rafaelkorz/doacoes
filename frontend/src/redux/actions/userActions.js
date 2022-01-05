@@ -22,7 +22,7 @@ export const userLogin = ( reqObj ) => async dispatch => {
 
   } catch (error) {
     console.log(error)
-    message.error('Usuário/Senha incorreta! ')
+    message.error('Aconteceu algum problema ao logar! ')
     dispatch({ type: 'LOADING' , payload: false})
   }
 }
