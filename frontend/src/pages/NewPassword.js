@@ -19,9 +19,13 @@ function NewPassword() {
         token,
         password,
       }
-      await api.post('/api/users/newpassword', data);
-      message.success('Senha alterada com sucesso!')
-      history.push('/login');
+      const response = await api.post('/api/users/newpassword', data);
+      if (response.data.type === 1) {
+        message.warn(response.data.message)
+      } else {
+        message.success(response.data.message)
+        history.push('/login');
+      }
     }
   }
 
