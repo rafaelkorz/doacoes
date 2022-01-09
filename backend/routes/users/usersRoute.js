@@ -81,26 +81,25 @@ router.post("/newpassword", (req, res) => {
   try {
     const { token, password } = req.body;
 
-
     jwt.verify(token, process.env.JWT_ACC_RESET_PW, (err, user) => {
-      if (err) {
-        return res.status(403).json("Token is not valid!");
-      }
-    })
-
-    const { email } = jwt_decode(token);
-
-    User.findOne({ email }).exec( async (err, user) => {
-
-      bcrypt.genSalt(10, (err, salt) =>
-        bcrypt.hash(password, salt, (err, hash) => {
-            if (err) throw err;
-            user.password = hash;
-            user.save();
+      if (!user) {    
+        return res.json({  type: 1, message: 'Token is not valid!' })
+      } else {
+        const { email } = jwt_decode(token);
+    
+        User.findOne({ email }).exec( async (err, user) => {
+    
+          bcrypt.genSalt(10, (err, salt) =>
+            bcrypt.hash(password, salt, (err, hash) => {
+                if (err) throw err;
+                user.password = hash;
+                user.save();
+            })
+          );
+    
+          return res.json({ type: 2, message: 'Updated password' })
         })
-      );
-
-      return res.json({ message: 'Updated password' })            
+      }
     })
   } catch (error) {
     return res.status(400).json(error);
