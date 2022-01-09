@@ -1,4 +1,4 @@
-import {api} from './../../services/api';
+import { api } from './../../services/api';
 import { message } from 'antd'
 
 export const userLogin = ( reqObj ) => async dispatch => {

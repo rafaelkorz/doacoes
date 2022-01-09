@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom'
 import { useDispatch , useSelector} from 'react-redux'
 import { userLogin } from '../redux/actions/userActions'
 import Spinner from '../components/Spinner';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const dispatch = useDispatch()
   const { loading } = useSelector(state => state.alertsReducer)
+  const history = useHistory();
 
   function onFinish(values) {
     dispatch(userLogin(values))        
@@ -27,21 +29,33 @@ function Login() {
           <Form layout='vertical' onFinish={onFinish}>
             <h1>Login</h1>
             <hr style={{ marginBottom: 10}}/>
-            <Form.Item name='username' label='Username' rules={[{required: true}]}>
-                <Input/>
+            <Form.Item 
+              name='username' 
+              label='Username' 
+              rules={[{ required: true }]}>
+              <Input/>
             </Form.Item>
-            <Form.Item name='password' label='Password' rules={[{required: true}]}>
-                <Input type='password'/>
+            <Form.Item 
+              name='password' 
+              label='Password' 
+              rules={[{ required: true }]}>
+              <Input type='password'/>
             </Form.Item>
+            <Link to='/forgot'>Esqueci minha senha</Link>
+            <br /> <br />
             <Button 
               htmlType="submit"
               loading={loading ? true : false}
               type="primary"
-              style={{ marginBottom: 15}}>
+              style={{ marginBottom: 15, width: 90}}>
               Login
             </Button>
-            <br />
-            <Link to='/register'>Cadastrar usuário</Link>
+            <Button 
+              onClick={() => history.push("/register")}
+              type="primary"
+              style={{ marginBottom: 15, marginLeft: 10 }}>
+              Cadastrar
+            </Button>
           </Form>
           }                
       </Card>
