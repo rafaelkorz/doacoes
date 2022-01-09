@@ -92,7 +92,7 @@ router.post("/payment", auth_middleware.verifyToken, async (req, res) => {
   
     } else {
       res.setHeader('Allow', 'POST')
-      res.status(405).end('Methos not allowed');
+      res.status(405).end('Method not allowed');
     }
 });
 

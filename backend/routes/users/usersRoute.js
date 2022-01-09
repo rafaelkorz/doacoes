@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../../models/userModel")
-const { sendEmail } = require("../../helpers/mailer")
-const { registerToken } = require("../../helpers/auth")
+const User = require("../../models/userModel");
+const { sendEmailActivateAccount, sendEmailResetPassword } = require("../../helpers/mailer");
+const { registerToken } = require("../../helpers/auth");
+const jwt_decode = require("jwt-decode");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 router.post("/login", async(req, res) => {
 const { username , password } = req.body
@@ -35,7 +38,7 @@ router.post("/register", (req, res) => {
         return res.json({ state: 1, message: "User with this email already exists"});
       }
 
-      sendEmail(name, email, cpf);
+      sendEmailActivateAccount(name, email, cpf);
 
       const newUser = new User(req.body)
       newUser.save((err, success) => {
@@ -50,6 +53,55 @@ router.post("/register", (req, res) => {
       })
     })
 
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+});
+
+
+router.post("/resetpassword", (req, res) => {
+  try {
+    const { email } = req.body;
+
+    User.findOne({email}).exec( async (err, user) => {
+      if (!user) {
+        return res.json({ type: 1, message: "User not found"});
+      }
+
+      sendEmailResetPassword(email);
+
+      res.json({ type: 2, message: 'Email has been sent, please check your email' })            
+    })
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+});
+
+router.post("/newpassword", (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+
+    jwt.verify(token, process.env.JWT_ACC_RESET_PW, (err, user) => {
+      if (err) {
+        return res.status(403).json("Token is not valid!");
+      }
+    })
+
+    const { email } = jwt_decode(token);
+
+    User.findOne({ email }).exec( async (err, user) => {
+
+      bcrypt.genSalt(10, (err, salt) =>
+        bcrypt.hash(password, salt, (err, hash) => {
+            if (err) throw err;
+            user.password = hash;
+            user.save();
+        })
+      );
+
+      return res.json({ message: 'Updated password' })            
+    })
   } catch (error) {
     return res.status(400).json(error);
   }
